@@ -127,7 +127,7 @@ range(summary(mitsch_nlme_No)$tTable[2:18, 1])
 mitsch_nlme_Nl <- mitscherlich_nlme(
   startVal = c(log10(36), 0.03, 25), startVector = start_vector,
   rhs = rhs, data = df_mm, scaleResp = 'log10', rateExp = 'ordinary',
-  maxIter = 50, minScale = 1e-8, msVerbose = F)
+  maxIter = 50, minScale = 1e-8, msVerbose = FALSE)
 AIC(mitsch_nlme_Nl)
 residu(mitsch_nlme_Nl)
 
@@ -135,7 +135,7 @@ residu(mitsch_nlme_Nl)
 colw_nlme_No <- colwell_nlme(
   startVal = c(30, 0.5, -0.01), startVector = start_vector,
   rhs = rhs, data = df_mm, scaleResp = 'ordinary',
-  maxIter = 50, minScale = 1e-8, msVerbose = F)
+  maxIter = 50, minScale = 1e-8, msVerbose = FALSE)
 AIC(colw_nlme_No)
 residu(colw_nlme_No)
 rsq(y = df_mm$Response, y_hat = predict(colw_nlme_No, level = 0))
@@ -146,7 +146,7 @@ rsq(y = df_mm$Response, y_hat = predict(colw_nlme_No, level = 2))
 colw_nlme_Nl <- colwell_nlme(
   startVal = c(30, 0.5, -0.01), startVector = start_vector,
   rhs = rhs, data = df_mm, scaleResp = 'log10',
-  maxIter = 50, minScale = 1e-8, msVerbose = F)
+  maxIter = 50, minScale = 1e-8, msVerbose = FALSE)
 AIC(colw_nlme_Nl)
 residu(colw_nlme_Nl)
 
@@ -154,7 +154,7 @@ residu(colw_nlme_Nl)
 quad_nlme_No <- quad_nlme(
   startVal = c(30, 0.5, -0.01), startVector = start_vector,
   rhs = rhs, data = df_mm, scaleResp = 'ordinary',
-  maxIter = 50, minScale = 1e-8, msVerbose = F)
+  maxIter = 50, minScale = 1e-8, msVerbose = FALSE)
 AIC(quad_nlme_No)
 residu(quad_nlme_No)
 
@@ -162,9 +162,32 @@ residu(quad_nlme_No)
 quad_nlme_Nl <- quad_nlme(
   startVal = c(30, 0.5, -0.01), startVector = start_vector,
   rhs = rhs, data = df_mm, scaleResp = 'log10',
-  maxIter = 50, minScale = 1e-8, msVerbose = F)
+  maxIter = 50, minScale = 1e-8, msVerbose = FALSE)
 AIC(quad_nlme_Nl)
 residu(quad_nlme_Nl)
+
+## Linear to max model (piecewise function)
+### try a grid of starting values to find convergence
+# grid <- as.matrix(expand.grid(intercept = seq(20, 26, by = 1),
+#                               slope = seq(0.1, 0.2, by = 0.05),
+#                               max_yield = seq(35, 45, by = 2.5)))
+# aic_n <- c()
+# for (i in 1:nrow(grid)) {
+#   try(lp_nlme_No <- lp_nlme(
+#     startVal = grid[i, ], startVector = start_vector,
+#     rhs = rhs, data = df_mm, scaleResp = 'ordinary',
+#     maxIter = 5, minScale = 1e-8, msVerbose = TRUE))
+#   aic_n[i] <- AIC(lp_nlme_No)
+#   print(paste(i, '/', nrow(grid)))
+# }
+# grid[which.min(aic_n), ]
+# plot(aic_n)
+
+lp_nlme_No <- lp_nlme(
+  startVal = c(20, 0.2, 35), startVector = start_vector,
+  rhs = rhs, data = df_mm, scaleResp = 'ordinary',
+  maxIter = 10, minScale = 1e-8, msVerbose = TRUE)
+### no convergence
 
 ### Comments
 ### The Mitscherlich model is more sound compared to Colwell.

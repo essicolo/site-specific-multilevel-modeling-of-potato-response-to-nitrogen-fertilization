@@ -25,6 +25,13 @@ colwFunc <- function(dose, b0, b1, b2) b0 + b1 * sqrt(dose) + b2 * dose
 ## Polynomial quadratic
 quadFunc <- function(dose, b0, b1, b2) b0 + b1 * dose + b2 * dose**2
 
+## Linear to max
+lpFunc <- function(dose, intercept, slope, max_yield) {
+  dose_break = (max_yield - intercept)/slope
+  yield = rep(max_yield, len=length(dose))
+  yield[dose<=dose_break] = slope*dose[dose<=dose_break] + intercept
+  return(yield)
+}
 
 # Mixed models
 ## Mitscherlich
@@ -132,6 +139,29 @@ quad_nlme <- function(startVal, startVector, rhs, data,
   return(mm)
 }
 
+
+## Linear to max
+lp_nlme <- function(startVal, startVector, rhs, data,
+                    scaleResp = 'ordinary', maxIter = 50, minScale = 1e-8,
+                    msVerbose = FALSE) {
+  
+  if (scaleResp == "log10") data$Response <- log10(data$Response)
+  
+  mm <- nlme(Response ~  pmin(intercept + slope * Dose, max_yield),
+             data = data, 
+             start = c(intercept = startVal[1], startVector,
+                       slope = startVal[2], startVector,
+                       max_yield = startVal[3], startVector
+             ), 
+             fixed = list(as.formula(paste("intercept ~ ", rhs)),
+                          as.formula(paste("slope ~ ", rhs)),
+                          as.formula(paste("max_yield ~ ", rhs))
+             ), 
+             random = max_yield ~ 1 | NoEssai/NoBloc,
+             control = list(maxIter = maxIter, returnObject=TRUE, 
+                            msVerbose=msVerbose, minScale = minScale))
+  return(mm)
+}
 
 
 # Yield response prediction from new data, by hand
