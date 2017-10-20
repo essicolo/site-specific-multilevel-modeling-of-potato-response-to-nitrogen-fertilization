@@ -284,7 +284,7 @@ data.frame(levels(df_mm$NoEssai), rsqMM)
 
 metaParam_L <- list()
 #trials <- levels(df_mm$NoEssai)
-trials <- c('4', '71', '89', '342')
+trials <- c('4', '71', '157', '342')
 metaparam_trials <- matrix(ncol = 4, nrow = length(trials))
 colnames(metaparam_trials) <- c('Asymptote', 'Environment', 'Rate', 'Optimal dose')
 rownames(metaparam_trials) <- trials
@@ -329,16 +329,13 @@ for (i in 1:length(trials)) {
   print(ess)
 }
 
-data.frame(levels(df_mm$NoEssai), rsqMM, metaparam_trials)
-
 summary(metaparam_trials)
 metaparam_trials[rownames(metaparam_trials) %in% trials, ]
 
 gg_metaparam_trials <- melt(metaparam_trials)
 names(gg_metaparam_trials) <- c('Trial', 'Parameter', 'Value')
 
-gg_metaparam_trials %>% filter(Trial == '400')
-compareEffects(data = df_mm, refTests = '400', mm = mmN,
+compareEffects(data = df_mm, refTests = '157', mm = mmN,
                rhs, col_dose = 'Dose', logYield = FALSE,
                rateExp = 'ordinary')
 gg_metaparam_trials %>%

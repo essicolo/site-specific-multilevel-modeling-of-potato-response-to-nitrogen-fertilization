@@ -96,7 +96,7 @@ data_N <- left_join(x = data_N, y = amalgamation_precCrop, by = 'PrecedentCultur
 data_N$PrecCrop.Five.Classes <- relevel(data_N$PrecCrop.Five.Classes, ref = "Cereal") # LRC as first level
 
 # Cultivar classes, by maturity order
-data_N$Cultivar = relevel(data_N$Cultivar, ref = "Superior") # Correct cultivar factors. Factor "SUperior" should come first.
+data_N$Cultivar = relevel(factor(data_N$Cultivar), ref = "Superior") # Correct cultivar factors. Factor "SUperior" should come first.
 amalgamation_Cultivar <- left_join(amalgamation_Cultivar, amalgamation_Cultivar_Order5, "Maturity.5")
 data_N <- left_join(x = data_N,
                      y = amalgamation_Cultivar[c('Cultivar', 'Maturity.Order')],
