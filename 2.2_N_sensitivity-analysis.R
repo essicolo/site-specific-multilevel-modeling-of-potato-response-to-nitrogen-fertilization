@@ -298,7 +298,7 @@ rangecases <- matrix(ncol = 4, nrow = 2)
 colnames(rangecases) <- c('A', 'E', 'R', 'DoseOpt')
 for (i in var_mm[-1]) {
   cases <- cases_f(data = select(df_mm, one_of(var_mm)), nbCase = 3, ref = i, quant.start = 2, quant.end = 4,
-                   fac.default = c('Cereal')) # 'Superior',
+                   fac.default = c("Small grain")) # 'Superior',
   if (class(df_mm[i][[1]]) == 'numeric') {
     rownames(cases) <- as.matrix(sensibility.analysis.tags)[rownames(sensibility.analysis.tags) == i, ]
   } else {
@@ -322,7 +322,7 @@ for (i in var_mm[-1]) {
 ### maturity order
 cases <- cases_f(data = select(df_mm, one_of(var_mm)), nbCase = 5, ref = var_mm[1],
                  custom.eval = sort(unique(df_mm$Maturity.Order)),
-                 fac.default = c('Cereal')) # 'Superior',
+                 fac.default = c("Small grain")) # 'Superior',
 rownames(cases) <- 1:5#paste('Maturity order', 1:5)
 pred.cases <- sensitivity.mitsch.parameters(cases = cases, dose = seq(0, 250, 1), mm = mmN,
                                             rhs = rhs, prix_dose = 1.20, prix_vendable = 275,
@@ -362,7 +362,7 @@ names(gg_sensitivity)[i]
 ## Sold price
 ### does not work for now...
 cases <- cases_f(data = select(df_mm, one_of(var_mm)), nbCase = 1, ref = var_mm[1],
-                 fac.default = c('Cereal')) # 'Superior',
+                 fac.default = c("Small grain")) # 'Superior',
 cases[1,1] <- sort(unique(df_mm$Maturity.Order))[3]
 cases$PrecCrop.Five.Classes <- factor(cases$PrecCrop.Five.Classes,
                                       levels = levels(df_mm$PrecCrop.Five.Classes))

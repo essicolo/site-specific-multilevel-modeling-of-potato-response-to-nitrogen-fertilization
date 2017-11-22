@@ -93,7 +93,7 @@ dev.off()
 ##################
 # Preceding crop classes (5 groups)
 data_N <- left_join(x = data_N, y = amalgamation_precCrop, by = 'PrecedentCultural') # join
-data_N$PrecCrop.Five.Classes <- relevel(data_N$PrecCrop.Five.Classes, ref = "Cereal") # LRC as first level
+data_N$PrecCrop.Five.Classes <- relevel(data_N$PrecCrop.Five.Classes, ref = "Small grain") # LRC as first level
 
 # Cultivar classes, by maturity order
 data_N$Cultivar = relevel(factor(data_N$Cultivar), ref = "Superior") # Correct cultivar factors. Factor "SUperior" should come first.
