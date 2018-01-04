@@ -1,4 +1,4 @@
-# [Site-specific multilevel modeling of potato response to nitrogen fertilization](https://www.frontiersin.org/articles/10.3389/fenvs.2017.00081/full)
+# [Site-Specific Multilevel Modeling of Potato Response to Nitrogen Fertilization](https://www.frontiersin.org/articles/10.3389/fenvs.2017.00081/full)
 Serge-Étienne Parent1*, Michael Leblanc1, Annie-Claude Parent2, Zonlehoua Coulibali1, Léon Etienne Parent1
 1. Department of Soils and Agrifood Engineering, Université Laval, Québec, Canada G1V0A6
 2. Department of Civil and Water Engineering, Université Laval, Québec, Canada G1V0A6
